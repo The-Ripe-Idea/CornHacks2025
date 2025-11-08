@@ -13,7 +13,7 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        String code = "🍌 🍌 🍌tree 🍌splat";
+        String code = "🍌 🍌 🍌together 🍌 🍌 🍌together 🍌 🍌 🍌together 🍌tree 🍌splat";
         BananaParser parser = new BananaParser();
         List<BananaCommands> commands = parser.parse(code);
         BananaInterpreter interpreter = new BananaInterpreter();
