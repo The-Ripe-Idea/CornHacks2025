@@ -74,4 +74,5 @@ public class BananaInterpreter {
     private void error(String msg) {
         System.out.println("🚫 Error: " + msg);
     }
+
 }
