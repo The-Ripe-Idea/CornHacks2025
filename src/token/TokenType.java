@@ -1,5 +1,6 @@
 package token;
 
+
 // Enums are the standard way to represent a fixed set of constants,
 // which is what token types are.
 public enum TokenType {

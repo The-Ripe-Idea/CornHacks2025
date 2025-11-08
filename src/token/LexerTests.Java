@@ -1,9 +1,12 @@
+package token; 
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
 public class LexerTests {
+
     @Test
     public void testNextToken() {
         String input = "=+(){},;";
@@ -13,7 +16,7 @@ public class LexerTests {
         // anonymous 'struct' in your test.
         record TestCase(TokenType expectedType, String expectedLiteral) {}
 
-        // We create an array of these test cases, just like the Go slice.
+        // We create an array of these test cases
         TestCase[] tests = new TestCase[] {
             new TestCase(TokenType.ASSIGN, "="),
             new TestCase(TokenType.PLUS, "+"),
@@ -26,25 +29,19 @@ public class LexerTests {
             new TestCase(TokenType.EOF, "") // Assuming your EOF literal is an empty string
         };
 
-        // l := New(input)
         Lexer l = new Lexer(input);
 
-        // for i, tt := range tests
         for (int i = 0; i < tests.length; i++) {
             TestCase tt = tests[i];
 
-            // tok := l.NextToken()
             Token tok = l.nextToken();
 
-            // if tok.Type != tt.expectedType
-            // We use JUnit's assertion functions instead of 'if' checks.
             assertEquals(
                 tt.expectedType(), 
                 tok.type(),
                 "tests[" + i + "] - tokentype wrong."
             );
 
-            // if tok.Literal != tt.expectedLiteral
             assertEquals(
                 tt.expectedLiteral(), 
                 tok.literal(),
