@@ -23,19 +23,19 @@ public class BananaParser {
                 continue;
             }
             switch (token) {
-                case "banana":
+                case "🍌":
                     commands.add(BananaCommands.PUSH_ONE);
                     break;
-                case "bananas":
+                case "🍌together":
                     commands.add(BananaCommands.ADD);
                     break;
-                case "bananabanana":
+                case "🍌tree":
                     commands.add(BananaCommands.MULTIPLY);
                     break;
-                case "banananana":
+                case "🍌splat":
                     commands.add(BananaCommands.PRINT);
                     break;
-                case "bananageddon":
+                case "🍌armagedon":
                     commands.add(BananaCommands.CLEAR);
                     break;
                 default:
