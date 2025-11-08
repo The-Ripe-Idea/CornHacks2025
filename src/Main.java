@@ -13,9 +13,9 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        String code = "banana banana bananas banananana"; // push 1, push 1, add, print
-        // BananaParser parser = new BananaParser();
-        List<BananaCommands> commands = BananaParser.parse(code);
+        String code = "🍌 🍌 🍌tree 🍌splat";
+        BananaParser parser = new BananaParser();
+        List<BananaCommands> commands = parser.parse(code);
         BananaInterpreter interpreter = new BananaInterpreter();
         interpreter.run(commands);
     }
