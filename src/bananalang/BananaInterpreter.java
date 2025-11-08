@@ -1,5 +1,6 @@
 package bananalang;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -15,14 +16,30 @@ public class BananaInterpreter {
      * 
      * @param commands the list of commands to execute
      */
-    public void run(List<BananaCommands> commands) {
-        for (BananaCommands cmd : commands) {
+    public void run(List<String> commands) {
+        Iterator<String> iterator = commands.iterator();
+        while (iterator.hasNext()) {
+            String cmd = iterator.next();
+            
+            if (cmd.equals("PUSH_ONE")) {
+                // Get the next command which should be a number
+                if (iterator.hasNext()) {
+                    String numberStr = iterator.next();
+                    try {
+                        int number = Integer.parseInt(numberStr);
+                        stack.push(number);
+                    } catch (NumberFormatException e) {
+                        error("Invalid number after PUSH_ONE: " + numberStr);
+                    }
+                } else {
+                    error("PUSH_ONE requires a number but none was provided");
+                }
+                continue;
+            }
+            
             switch (cmd) {
-                case PUSH_ONE:
-                    stack.push(1);
-                    break;
 
-                case ADD: {
+                case "ADD": {
                     if (stack.size() < 2) {
                         error("ADD needs 2 values!");
                         break;
@@ -33,7 +50,7 @@ public class BananaInterpreter {
                     break;
                 }
 
-                case MULTIPLY: {
+                case "MULTIPLY": {
                     if (stack.size() < 2) {
                         error("MULTIPLY needs 2 values!");
                         break;
@@ -44,7 +61,7 @@ public class BananaInterpreter {
                     break;
                 }
 
-                case PRINT: {
+                case "PRINT": {
                     if (stack.isEmpty()) {
                         error("PRINT needs 1 value!");
                         break;
@@ -53,7 +70,7 @@ public class BananaInterpreter {
                     break;
                 }
 
-                case CLEAR: {
+                case "CLEAR": {
                     stack.clear();
                     System.out.println("💥 Stack cleared!");
                     break;
