@@ -1,7 +1,11 @@
 import bananalang.BananaCommands;
 import bananalang.BananaInterpreter;
 import bananalang.BananaParser;
+
+
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Main class for testing the Banana language interpreter.
@@ -13,9 +17,12 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        String code = "🍌 🍌 🍌together 🍌 🍌 🍌together 🍌 🍌 🍌together 🍌tree 🍌splat";
+        String code = "🍌 5 🍌 🍌🍌 🍌🍌🍌";
         BananaParser parser = new BananaParser();
-        List<BananaCommands> commands = parser.parse(code);
+        List<String> commands = parser.parse(code);
+        // List<String> list = new ArrayList<String>();
+        // list.add("PUSH_ONE 72");
+        // list.add("PRINT");
         BananaInterpreter interpreter = new BananaInterpreter();
         interpreter.run(commands);
     }
