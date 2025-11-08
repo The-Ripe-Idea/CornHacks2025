@@ -14,7 +14,7 @@ public class BananaParser {
      * @param code the Banana language code to parse
      * @return a list of BananaCommands parsed from the code
      */
-    public List<BananaCommands> parse(String code) {
+    public static List<BananaCommands> parse(String code) {
         List<BananaCommands> commands = new ArrayList<>();
         String[] tokens = code.split("\\s+"); // split by whitespace
 
