@@ -71,6 +71,14 @@ public class BananaInterpreter {
                     break;
                 }
 
+                case "PRINTC":
+                    if (stack.isEmpty()) {
+                        error("PRINT needs 1 value!");
+                        break;
+                    }
+                    System.out.println("🍌 Output: " + (char) stack.pop().intValue());
+                    break;
+
                 case "CLEAR": {
                     stack.clear();
                     System.out.println("💥 Stack cleared!");

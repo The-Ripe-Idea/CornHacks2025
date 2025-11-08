@@ -25,7 +25,6 @@ public class BananaParser {
             }
             switch (token) {
                 case "🍌":
-                    // Check if next token is a number
                     if (i + 1 < tokens.length) {
                         String nextToken = tokens[i + 1];
                         int number = 1;
@@ -45,11 +44,12 @@ public class BananaParser {
                                     j += Character.charCount(codePoint); // move to the next emoji
                                 }
                                 number = Integer.parseInt(binaryString.toString(), 2);
+                                i++; // Skip the number token
                             }
                             
                             commands.add("PUSH_ONE");
                             commands.add(String.valueOf(number));
-                            i++; // Skip the number token
+                            
                             break;
                             
                         } catch (NumberFormatException e) {
@@ -72,6 +72,9 @@ public class BananaParser {
                     break;
                 case "🍌🍌🍌":
                     commands.add("PRINT");
+                    break;
+                case "🍌🍌🍌🍌🍌🍌":
+                    commands.add("PRINTC");
                     break;
                 case "🍌🍌🍌🍌🍌":
                     commands.add("CLEAR");
