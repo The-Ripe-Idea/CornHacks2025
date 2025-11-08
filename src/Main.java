@@ -16,7 +16,7 @@ public class Main {
      * 
      * @param args command line arguments (not used)
      */
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);
