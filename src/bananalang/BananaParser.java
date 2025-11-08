@@ -29,7 +29,22 @@ public class BananaParser {
                     if (i + 1 < tokens.length) {
                         String nextToken = tokens[i + 1];
                         try {
-                            int number = Integer.parseInt(nextToken);
+                          if (token.startsWith("🌙")) {
+                StringBuilder binaryString = new StringBuilder();
+                for (int i = 0; i < token.length(); ) {
+                    int codePoint = token.codePointAt(i); // get the full emoji code point
+                    String emoji = new String(Character.toChars(codePoint));
+                    
+                    if (emoji.equals("🍌")) {
+                        binaryString.append('1');
+                    } else if (emoji.equals("🌙")) {
+                        binaryString.append('0');
+                    }
+
+                    i += Character.charCount(codePoint); // move to the next emoji
+                }
+                int number = Integer.parseInt(binaryString.toString(), 2));
+                            
                             commands.add("PUSH_ONE");
                             commands.add(String.valueOf(number));
                             i++; // Skip the number token
