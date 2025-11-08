@@ -28,27 +28,30 @@ public class BananaParser {
                     // Check if next token is a number
                     if (i + 1 < tokens.length) {
                         String nextToken = tokens[i + 1];
+                        int number = 1;
                         try {
-                          if (token.startsWith("🌙")) {
-                StringBuilder binaryString = new StringBuilder();
-                for (int i = 0; i < token.length(); ) {
-                    int codePoint = token.codePointAt(i); // get the full emoji code point
-                    String emoji = new String(Character.toChars(codePoint));
-                    
-                    if (emoji.equals("🍌")) {
-                        binaryString.append('1');
-                    } else if (emoji.equals("🌙")) {
-                        binaryString.append('0');
-                    }
+                            if (nextToken.startsWith("🌙")) {
+                                StringBuilder binaryString = new StringBuilder();
+                                for (int j = 0; j < nextToken.length(); ) {
+                                    int codePoint = nextToken.codePointAt(j); // get the full emoji code point
+                                    String emoji = new String(Character.toChars(codePoint));
 
-                    i += Character.charCount(codePoint); // move to the next emoji
-                }
-                int number = Integer.parseInt(binaryString.toString(), 2));
+                                    if (emoji.equals("🍌")) {
+                                        binaryString.append('1');
+                                    } else if (emoji.equals("🌙")) {
+                                        binaryString.append('0');
+                                    }
+
+                                    j += Character.charCount(codePoint); // move to the next emoji
+                                }
+                                number = Integer.parseInt(binaryString.toString(), 2);
+                            }
                             
                             commands.add("PUSH_ONE");
                             commands.add(String.valueOf(number));
                             i++; // Skip the number token
                             break;
+                            
                         } catch (NumberFormatException e) {
                             // Not a number, push 1 as default
                             commands.add("PUSH_ONE");
