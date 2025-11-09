@@ -26,7 +26,7 @@ public class BananaInterpreter {
         Iterator<String> iterator = commands.iterator();
         while (iterator.hasNext()) {
             String cmd = iterator.next();
-            while (lookingForU){ // while (uCounter > 0)
+            while (lookingForU) { // while (uCounter > 0)
                 cmd = iterator.next();
                 if (cmd.equals("EQUALS")) {
                     uCounter++;
@@ -45,7 +45,7 @@ public class BananaInterpreter {
                     String numberStr = iterator.next();
                     try {
                         double number = Double.parseDouble(numberStr);
-                        this.list.add(number);
+                        list.add(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
                     }
@@ -79,8 +79,33 @@ public class BananaInterpreter {
                             i += Character.charCount(processed.codePointAt(i));
                         }
 
-                        this.list.add(emojiCount);
+                        list.add(emojiCount);
                     }
+                }
+                continue;
+            }
+            
+            if (cmd.equals("PUSH_FROM_INDEX")) {
+                // Get the index from the next command
+                if (iterator.hasNext()) {
+                    String indexStr = iterator.next();
+                    try {
+                        int index = Integer.parseInt(indexStr);
+                        
+                        // Check if index is valid
+                        if (index < 0 || index >= list.size()) {
+                            this.error("PUSH_FROM_INDEX: Index " + index + 
+                                " is out of bounds (list size: " + list.size() + ")");
+                        } else {
+                            // Get the element at the specified index and push it to the end (duplicate it)
+                            double value = list.get(index);
+                            list.add(value);
+                        }
+                    } catch (NumberFormatException e) {
+                        this.error("Invalid index after PUSH_FROM_INDEX: " + indexStr);
+                    }
+                } else {
+                    this.error("PUSH_FROM_INDEX requires an index but none was provided");
                 }
                 continue;
             }
@@ -88,106 +113,106 @@ public class BananaInterpreter {
             switch (cmd) {
 
                 case "ADD": {
-                    if (this.list.size() < 2) {
+                    if (list.size() < 2) {
                         this.error("ADD needs 2 values!");
                         break;
                     }
-                    double b = this.list.remove(this.list.size() - 1);
-                    double a = this.list.remove(this.list.size() - 1);
-                    this.list.add(a + b);
+                    double b = list.remove(list.size() - 1);
+                    double a = list.remove(list.size() - 1);
+                    list.add(a + b);
                     break;
                 }
 
                 case "SUBTRACT": {
-                    if (this.list.size() < 2) {
+                    if (list.size() < 2) {
                         this.error("SUBTRACT needs 2 values!");
                         break;
                     }
-                    double b = this.list.remove(this.list.size() - 1);
-                    double a = this.list.remove(this.list.size() - 1);
-                    this.list.add(a - b);
+                    double b = list.remove(list.size() - 1);
+                    double a = list.remove(list.size() - 1);
+                    list.add(a - b);
                     break;
                 }
 
                 case "MULTIPLY": {
-                    if (this.list.size() < 2) {
+                    if (list.size() < 2) {
                         this.error("MULTIPLY needs 2 values!");
                         break;
                     }
-                    double b = this.list.remove(this.list.size() - 1);
-                    double a = this.list.remove(this.list.size() - 1);
-                    this.list.add(a * b);
+                    double b = list.remove(list.size() - 1);
+                    double a = list.remove(list.size() - 1);
+                    list.add(a * b);
                     break;
                 }
 
                 case "DUP":
-                    if (this.list.isEmpty()) {
+                    if (list.isEmpty()) {
                         this.error("DUP needs 1 value!");
                         break;
                     }
-                    double value = this.list.get(this.list.size() - 1); // Look at top without removing
-                    this.list.add(value); // Push a copy
+                    double value = list.get(list.size() - 1); // Look at top without removing
+                    list.add(value); // Push a copy
                     break;
                 case "DIVIDE": {
-                    if (this.list.size() < 2) {
+                    if (list.size() < 2) {
                         this.error("DIVIDE needs 2 values!");
                         break;
                     }
-                    double b = this.list.remove(this.list.size() - 1);
-                    double a = this.list.remove(this.list.size() - 1);
-                    this.list.add(a / b);
+                    double b = list.remove(list.size() - 1);
+                    double a = list.remove(list.size() - 1);
+                    list.add(a / b);
                     break;
                 }
 
                 case "MODULUS": {
-                    if (this.list.size() < 2) {
+                    if (list.size() < 2) {
                         this.error("MODULUS needs 2 values!");
                         break;
                     }
-                    double b = this.list.remove(this.list.size() - 1);
-                    double a = this.list.remove(this.list.size() - 1);
-                    this.list.add(a % b);
+                    double b = list.remove(list.size() - 1);
+                    double a = list.remove(list.size() - 1);
+                    list.add(a % b);
                     break;
                 }
 
                 case "PRINT": {
-                    if (this.list.isEmpty()) {
+                    if (list.isEmpty()) {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print(this.list.remove(this.list.size() - 1));
+                    System.out.print(list.remove(list.size() - 1));
 
                     break;
                 }
 
                 case "PRINTC":
-                    if (this.list.isEmpty()) {
+                    if (list.isEmpty()) {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print((char) this.list.remove(this.list.size() - 1).intValue());
+                    System.out.print((char) list.remove(list.size() - 1).intValue());
 
                     break;
 
                 case "CLEAR": {
-                    this.list.clear();
+                    list.clear();
                     System.out.println("💥 List cleared!");
                     break;
                 }
 
                 case "EQUALS": {
-                    // if (this.list.size() < 2) { // no equality found
-                    //     this.list.add(0.0);
+                    // if (list.size() < 2) { // no equality found
+                    //     list.add(0.0);
                     //     lookingForU = true;
                     //     uCounter = 1;
                     // }
 
-                    double b = this.list.remove(this.list.size() - 1);
-                    double a = this.list.remove(this.list.size() - 1);
+                    double b = list.remove(list.size() - 1);
+                    double a = list.remove(list.size() - 1);
                     if (a == b) {
-                        this.list.add(1.0);
+                        list.add(1.0);
                     } else {
-                        this.list.add(b);
+                        list.add(b);
                         lookingForU = true;
                         uCounter = 1;
                     }
