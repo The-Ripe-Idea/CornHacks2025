@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public class BananaInterpreter {
 
-    private final Stack<Integer> stack = new Stack<>();
+    private final Stack<Double> stack = new Stack<>();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -23,13 +23,13 @@ public class BananaInterpreter {
         Iterator<String> iterator = commands.iterator();
         while (iterator.hasNext()) {
             String cmd = iterator.next();
-            
+
             if (cmd.equals("PUSH_ONE")) {
                 // Get the next command which should be a number
                 if (iterator.hasNext()) {
                     String numberStr = iterator.next();
                     try {
-                        int number = Integer.parseInt(numberStr);
+                        double number = Integer.parseInt(numberStr);
                         this.stack.push(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
@@ -39,43 +39,43 @@ public class BananaInterpreter {
                 }
                 continue;
             }
-            
+
             if (cmd.equals("PUSH_INPUT")) {
                 // Read input from console and validate it only contains 🍌
                 String input;
                 boolean validInput = false;
-                
+
                 while (!validInput) {
-                    input = scanner.nextLine();
+                    input = this.scanner.nextLine();
                     validInput = true;
-                    
+
                     // Check if input only contains 🍌 emojis (nothing else, not even whitespace)
-                    for (int i = 0; i < input.length(); ) {
+                    for (int i = 0; i < input.length();) {
                         int codePoint = input.codePointAt(i);
                         String emoji = new String(Character.toChars(codePoint));
-                        
+
                         if (!emoji.equals("🍌")) {
                             validInput = false;
                             break;
                         }
-                        
+
                         i += Character.charCount(codePoint);
                     }
-                    
+
                     if (validInput) {
                         // Count the number of 🍌 emojis (input is already validated to only contain 🍌)
-                        int bananaCount = 0;
-                        for (int i = 0; i < input.length(); ) {
+                        double bananaCount = 0;
+                        for (int i = 0; i < input.length();) {
                             bananaCount++;
                             i += Character.charCount(input.codePointAt(i));
                         }
-                        
-                        stack.push(bananaCount);
+
+                        this.stack.push(bananaCount);
                     }
                 }
                 continue;
             }
-            
+
             switch (cmd) {
 
                 case "ADD": {
@@ -83,8 +83,8 @@ public class BananaInterpreter {
                         this.error("ADD needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a + b);
                     break;
                 }
@@ -105,12 +105,20 @@ public class BananaInterpreter {
                         this.error("MULTIPLY needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a * b);
                     break;
                 }
 
+                case "DUP":
+                    if (this.stack.isEmpty()) {
+                        this.error("DUP needs 1 value!");
+                        break;
+                    }
+                    double value = this.stack.peek(); // Look at top without removing
+                    this.stack.push(value); // Push a copy
+                    break;
                 case "DIVIDE": {
                     if (this.stack.size() < 2) {
                         this.error("DIVIDE needs 2 values!");
@@ -138,7 +146,7 @@ public class BananaInterpreter {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print(stack.pop());
+                    System.out.print(this.stack.pop());
 
                     break;
                 }
@@ -148,7 +156,7 @@ public class BananaInterpreter {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print((char) stack.pop().intValue());
+                    System.out.print((char) this.stack.pop().intValue());
 
                     break;
 
@@ -159,16 +167,20 @@ public class BananaInterpreter {
                 }
 
                 case "EQUALS": {
-                    int b = stack.pop();
-                    int a = stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     if (a == b) {
+                        this.stack.push(1.00);
+                    } else {
+                        this.stack.push(0.0);
+                    }
+                    break;
                         stack.push(1);
                     } else {
                         stack.push(0);
                     }
                     
                 }
-
 
                 default:
                     this.error("Unknown command: " + cmd);
