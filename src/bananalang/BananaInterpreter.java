@@ -129,11 +129,11 @@ public class BananaInterpreter {
                     int b = stack.pop();
                     int a = stack.pop();
                     if (a == b) {
-                        // TODO: impement body execution
+                        stack.push(1);
                     } else {
-                        // TODO: implement skipping over body
+                        stack.push(0);
                     }
-                    stack.push(b);
+                    
                 }
 
 
