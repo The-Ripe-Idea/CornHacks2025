@@ -27,8 +27,17 @@ public class BananaParser {
                 case "🍌":
                     if (i + 1 < tokens.length) {
                         String nextToken = tokens[i + 1];
+                        
+                        // Check if next token is 🍌🍌🍌 (input token)
+                        if (nextToken.equals("🍌🍌🍌")) {
+                            commands.add("PUSH_INPUT");
+                            i++; // Skip the input token
+                            break;
+                        }
+                        
                         int number = 1;
                         try {
+                            // TODO: add input argument for PUSH
                             if (nextToken.startsWith("🌙")) {
                                 StringBuilder binaryString = new StringBuilder();
                                 for (int j = 0; j < nextToken.length(); ) {
@@ -67,17 +76,20 @@ public class BananaParser {
                 case "🍌🍌":
                     commands.add("ADD");
                     break;
-                case "🍌🍌🍌🍌":
+                case "🍌🌴":
                     commands.add("MULTIPLY");
                     break;
-                case "🍌🍌🍌":
+                case "🍌🔢":
                     commands.add("PRINT");
                     break;
-                case "🍌🍌🍌🍌🍌🍌":
+                case "🍌🔡":
                     commands.add("PRINTC");
                     break;
                 case "🍌🍌🍌🍌🍌":
                     commands.add("CLEAR");
+                    break;
+                case "🍌❓":
+                    commands.add("EQUALS");
                     break;
                 default:
                     System.out.println("⚠️ Unknown token: " + token);
