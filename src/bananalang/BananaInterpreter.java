@@ -212,7 +212,7 @@ public class BananaInterpreter {
                     //     lookingForU = true;
                     //     uCounter = 1;
                     // }
-                    System.out.println(list.toString() + "a");
+                    //System.out.println(list.toString() + "a");
                     double b = list.remove(list.size() - 1);
                     double a = list.remove(list.size() - 1);
                     if (a == b) {

@@ -16,9 +16,8 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) throws FileNotFoundException{
-        //String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
-        String code = BananaPreprocessor.process(new File("./fitness.txt"));
-        //System.out.println(code);
+        String code = BananaPreprocessor.process(new File("./hello_golf.nana"));
+        
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);
         BananaInterpreter interpreter = new BananaInterpreter();
