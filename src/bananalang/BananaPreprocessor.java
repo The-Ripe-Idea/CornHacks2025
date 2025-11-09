@@ -26,7 +26,7 @@ public class BananaPreprocessor {
         for (int i = 0; i < s.length(); ) {
             int codePoint = s.codePointAt(i);
             String emoji = new String(Character.toChars(codePoint));
-            if (emoji.equals("🍌") || emoji.equals("🌙") || emoji.equals("🔡") || emoji.equals("🔢") || emoji.equals("🌴")) {
+            if (emoji.equals("🍌") || emoji.equals("🌙") || emoji.equals("🙉") || emoji.equals("🙈") || emoji.equals("🌴")) {
                 result.append(emoji);
             } else {
                 result.append(" ");
