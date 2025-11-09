@@ -1,16 +1,16 @@
 package bananalang;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * This class is responsible for interpreting the Banana language.
  */
 public class BananaInterpreter {
 
-    private final Stack<Double> stack = new Stack<>();
+    private final ArrayList<Double> list = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -30,7 +30,7 @@ public class BananaInterpreter {
                     String numberStr = iterator.next();
                     try {
                         double number = Integer.parseInt(numberStr);
-                        this.stack.push(number);
+                        this.list.add(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
                     }
@@ -70,7 +70,7 @@ public class BananaInterpreter {
                             i += Character.charCount(input.codePointAt(i));
                         }
 
-                        this.stack.push(bananaCount);
+                        this.list.add(bananaCount);
                     }
                 }
                 continue;
@@ -79,100 +79,100 @@ public class BananaInterpreter {
             switch (cmd) {
 
                 case "ADD": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("ADD needs 2 values!");
                         break;
                     }
-                    double b = this.stack.pop();
-                    double a = this.stack.pop();
-                    this.stack.push(a + b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a + b);
                     break;
                 }
 
                 case "SUBTRACT": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("SUBTRACT needs 2 values!");
                         break;
                     }
-                    double b = this.stack.pop();
-                    double a = this.stack.pop();
-                    this.stack.push(a - b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a - b);
                     break;
                 }
 
                 case "MULTIPLY": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("MULTIPLY needs 2 values!");
                         break;
                     }
-                    double b = this.stack.pop();
-                    double a = this.stack.pop();
-                    this.stack.push(a * b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a * b);
                     break;
                 }
 
                 case "DUP":
-                    if (this.stack.isEmpty()) {
+                    if (this.list.isEmpty()) {
                         this.error("DUP needs 1 value!");
                         break;
                     }
-                    double value = this.stack.peek(); // Look at top without removing
-                    this.stack.push(value); // Push a copy
+                    double value = this.list.get(this.list.size() - 1); // Look at top without removing
+                    this.list.add(value); // Push a copy
                     break;
                 case "DIVIDE": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("DIVIDE needs 2 values!");
                         break;
                     }
-                    double b = this.stack.pop();
-                    double a = this.stack.pop();
-                    this.stack.push(a / b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a / b);
                     break;
                 }
 
                 case "MODULUS": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("MODULUS needs 2 values!");
                         break;
                     }
-                    double b = this.stack.pop();
-                    double a = this.stack.pop();
-                    this.stack.push(a % b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a % b);
                     break;
                 }
 
                 case "PRINT": {
-                    if (this.stack.isEmpty()) {
+                    if (this.list.isEmpty()) {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print(this.stack.pop());
+                    System.out.print(this.list.remove(this.list.size() - 1));
 
                     break;
                 }
 
                 case "PRINTC":
-                    if (this.stack.isEmpty()) {
+                    if (this.list.isEmpty()) {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print((char) this.stack.pop().intValue());
+                    System.out.print((char) this.list.remove(this.list.size() - 1).intValue());
 
                     break;
 
                 case "CLEAR": {
-                    this.stack.clear();
-                    System.out.println("💥 Stack cleared!");
+                    this.list.clear();
+                    System.out.println("💥 List cleared!");
                     break;
                 }
 
                 case "EQUALS": {
-                    double b = this.stack.pop();
-                    double a = this.stack.pop();
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
                     if (a == b) {
-                        this.stack.push(1.0);
+                        this.list.add(1.0);
                     } else {
-                        this.stack.push(0.0);
+                        this.list.add(0.0);
                     }
                     break;
                 }
