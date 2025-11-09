@@ -94,8 +94,8 @@ public class BananaInterpreter {
                         this.error("SUBTRACT needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a - b);
                     break;
                 }
@@ -124,8 +124,8 @@ public class BananaInterpreter {
                         this.error("DIVIDE needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a / b);
                     break;
                 }
@@ -135,8 +135,8 @@ public class BananaInterpreter {
                         this.error("MODULUS needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a % b);
                     break;
                 }
@@ -170,16 +170,11 @@ public class BananaInterpreter {
                     double b = this.stack.pop();
                     double a = this.stack.pop();
                     if (a == b) {
-                        this.stack.push(1.00);
+                        this.stack.push(1.0);
                     } else {
                         this.stack.push(0.0);
                     }
                     break;
-                        stack.push(1);
-                    } else {
-                        stack.push(0);
-                    }
-                    
                 }
 
                 default:

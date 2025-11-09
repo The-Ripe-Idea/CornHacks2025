@@ -121,14 +121,13 @@ public class BananaParser {
                 case "🍌🌴":
                     commands.add("MULTIPLY");
                     break;
-                case "🍌🙈":
                 case "🍌🪾":
                     commands.add("DIVIDE");
                     break;
                 case "🍌❄️":
                     commands.add("MODULUS");
                     break;
-                case "🍌🔢":
+                case "🍌🙈":
                     commands.add("PRINT");
                     break;
                 case "🍌🙉":
