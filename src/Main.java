@@ -1,7 +1,5 @@
-import bananalang.BananaCommands;
 import bananalang.BananaInterpreter;
 import bananalang.BananaParser;
-
 import bananalang.BananaPreprocessor;
 import java.io.File;
 import java.io.FileNotFoundException;

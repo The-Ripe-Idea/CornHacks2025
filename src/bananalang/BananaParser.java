@@ -49,12 +49,12 @@ public class BananaParser {
 
                                 j += Character.charCount(codePoint); // move to the next emoji
                             }
-                            double number = Integer.parseInt(binaryString.toString(), 2);
-                            number = BananaInterpreter.list.get((int) number);
+                            int index = Integer.parseInt(binaryString.toString(), 2);
                             i++; // Skip the number token
 
-                            commands.add("PUSH_ONE");
-                            commands.add(String.valueOf(number));
+                            // Generate command to push element from index at runtime
+                            commands.add("PUSH_FROM_INDEX");
+                            commands.add(String.valueOf(index));
                             
                             break;
                         }
