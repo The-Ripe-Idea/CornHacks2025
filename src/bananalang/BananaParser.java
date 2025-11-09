@@ -35,10 +35,31 @@ public class BananaParser {
                             break;
                         }
                         
-                        int number = 1;
+                        double number = 1;
                         try {
                             // TODO: add input argument for PUSH
-                            if (nextToken.startsWith("🌙")) {
+                            if (nextToken.startsWith("🌙🌙")) {
+                                int x = 0;
+                                StringBuilder binaryString = new StringBuilder();
+                                int[] numberHalves = new int[2];
+                                for (int j = 0; j < nextToken.length(); ) {
+                                    int codePoint = nextToken.codePointAt(j); // get the full emoji code point
+                                    String emoji = new String(Character.toChars(codePoint));
+
+                                    if (emoji.equals("🍌")) {
+                                        binaryString.append('1');
+                                    } else if (emoji.equals("🌙")) {
+                                        binaryString.append('0');
+                                    } else if (emoji.equals("🐒")) {
+                                        numberHalves[x] += Integer.parseInt(binaryString.toString(), 2);
+                                        x++;
+                                    }
+                                    j += Character.charCount(codePoint); // move to the next emoji
+                                }
+                                String doubleString = numberHalves[0] + "." + numberHalves[1];
+                                number = Double.parseDouble(doubleString);
+                                i++; // Skip the number token
+                            } else if (nextToken.startsWith("🌙")) {
                                 StringBuilder binaryString = new StringBuilder();
                                 for (int j = 0; j < nextToken.length(); ) {
                                     int codePoint = nextToken.codePointAt(j); // get the full emoji code point
@@ -54,10 +75,10 @@ public class BananaParser {
                                 }
                                 number = Integer.parseInt(binaryString.toString(), 2);
                                 i++; // Skip the number token
-                            }
+                            }   
                             
                             commands.add("PUSH_ONE");
-                            commands.add(String.valueOf(number));
+                            commands.add(String.valueOf((double) number));
                             
                             break;
                             

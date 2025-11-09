@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public class BananaInterpreter {
 
-    private final Stack<Integer> stack = new Stack<>();
+    private final Stack<Double> stack = new Stack<>();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -29,7 +29,7 @@ public class BananaInterpreter {
                 if (iterator.hasNext()) {
                     String numberStr = iterator.next();
                     try {
-                        int number = Integer.parseInt(numberStr);
+                        double number = Integer.parseInt(numberStr);
                         this.stack.push(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
@@ -46,7 +46,7 @@ public class BananaInterpreter {
                 boolean validInput = false;
                 
                 while (!validInput) {
-                    input = scanner.nextLine();
+                    input = this.scanner.nextLine();
                     validInput = true;
                     
                     // Check if input only contains 🍌 emojis (nothing else, not even whitespace)
@@ -64,13 +64,13 @@ public class BananaInterpreter {
                     
                     if (validInput) {
                         // Count the number of 🍌 emojis (input is already validated to only contain 🍌)
-                        int bananaCount = 0;
+                        double bananaCount = 0;
                         for (int i = 0; i < input.length(); ) {
                             bananaCount++;
                             i += Character.charCount(input.codePointAt(i));
                         }
                         
-                        stack.push(bananaCount);
+                        this.stack.push(bananaCount);
                     }
                 }
                 continue;
@@ -83,8 +83,8 @@ public class BananaInterpreter {
                         this.error("ADD needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a + b);
                     break;
                 }
@@ -94,8 +94,8 @@ public class BananaInterpreter {
                         this.error("MULTIPLY needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     this.stack.push(a * b);
                     break;
                 }
@@ -105,7 +105,7 @@ public class BananaInterpreter {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print(stack.pop());
+                    System.out.print(this.stack.pop());
 
                     break;
                 }
@@ -115,7 +115,7 @@ public class BananaInterpreter {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print((char) stack.pop().intValue());
+                    System.out.print((char) this.stack.pop().intValue());
 
                     break;
 
@@ -124,16 +124,16 @@ public class BananaInterpreter {
                     System.out.println("💥 Stack cleared!");
                     break;
                 }
-
+ 
                 case "EQUALS": {
-                    int b = stack.pop();
-                    int a = stack.pop();
+                    double b = this.stack.pop();
+                    double a = this.stack.pop();
                     if (a == b) {
-                        // TODO: impement body execution
+                        this.stack.push(1.00);
                     } else {
-                        // TODO: implement skipping over body
+                        this.stack.push(0.0);
                     }
-                    stack.push(b);
+                    break;
                 }
 
 
