@@ -35,12 +35,45 @@ public class BananaParser {
                             break;
                         }
                         
-                        int number = 1;
+                        double number = 1;
+                        int j = 0;
+                        boolean negative = false;
                         try {
-                            // TODO: add input argument for PUSH
-                            if (nextToken.startsWith("🌙")) {
+                            if (nextToken.startsWith("🌙🌙")) {
+                                
+                                if (nextToken.startsWith("🌙🌙🍌")) {
+                                    j = 3;
+                                    negative = true;
+                                }
+                                int x = 0;
                                 StringBuilder binaryString = new StringBuilder();
-                                for (int j = 0; j < nextToken.length(); ) {
+                                int[] numberHalves = new int[2];
+                                while (j < nextToken.length()) {
+                                    int codePoint = nextToken.codePointAt(j); // get the full emoji code point
+                                    String emoji = new String(Character.toChars(codePoint));
+
+                                    if (emoji.equals("🍌")) {
+                                        binaryString.append('1');
+                                    } else if (emoji.equals("🌙")) {
+                                        binaryString.append('0');
+                                    } else if (emoji.equals("🐒")) {
+                                        numberHalves[x] += Integer.parseInt(binaryString.toString(), 2);
+                                        x++;
+                                    }
+                                    j += Character.charCount(codePoint); // move to the next emoji
+                                }
+                                String doubleString = numberHalves[0] + "." + numberHalves[1];
+                                number = (Double.parseDouble(doubleString));
+                                if (negative) {
+                                    number *= -1;
+                                }
+                                i++; // Skip the number token
+                            } else if (nextToken.startsWith("🌙")) {
+                                if (nextToken.startsWith("🌙🍌")) {
+                                    negative = true;
+                                }
+                                StringBuilder binaryString = new StringBuilder();
+                                for (j = 2; j < nextToken.length(); ) {
                                     int codePoint = nextToken.codePointAt(j); // get the full emoji code point
                                     String emoji = new String(Character.toChars(codePoint));
 
@@ -53,11 +86,14 @@ public class BananaParser {
                                     j += Character.charCount(codePoint); // move to the next emoji
                                 }
                                 number = Integer.parseInt(binaryString.toString(), 2);
+                                if (negative) {
+                                    number *= -1;
+                                }
                                 i++; // Skip the number token
-                            }
+                            }   
                             
                             commands.add("PUSH_ONE");
-                            commands.add(String.valueOf(number));
+                            commands.add(String.valueOf((double) number));
                             
                             break;
                             
@@ -91,10 +127,10 @@ public class BananaParser {
                 case "🍌❄️":
                     commands.add("MODULUS");
                     break;
-                case "🍌🔢":
+                case "🍌🙈":
                     commands.add("PRINT");
                     break;
-                case "🍌🔡":
+                case "🍌🙉":
                     commands.add("PRINTC");
                     break;
                 case "🍌🍌🍌🍌🍌":

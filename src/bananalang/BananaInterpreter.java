@@ -1,16 +1,16 @@
 package bananalang;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * This class is responsible for interpreting the Banana language.
  */
 public class BananaInterpreter {
 
-    private final Stack<Integer> stack = new Stack<>();
+    private final ArrayList<Double> list = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -23,14 +23,14 @@ public class BananaInterpreter {
         Iterator<String> iterator = commands.iterator();
         while (iterator.hasNext()) {
             String cmd = iterator.next();
-            
+
             if (cmd.equals("PUSH_ONE")) {
                 // Get the next command which should be a number
                 if (iterator.hasNext()) {
                     String numberStr = iterator.next();
                     try {
-                        int number = Integer.parseInt(numberStr);
-                        this.stack.push(number);
+                        double number = Integer.parseInt(numberStr);
+                        this.list.add(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
                     }
@@ -39,97 +39,105 @@ public class BananaInterpreter {
                 }
                 continue;
             }
-            
+
             if (cmd.equals("PUSH_INPUT")) {
                 // Read input from console and validate it only contains 🍌
                 String input;
                 boolean validInput = false;
-                
+
                 while (!validInput) {
-                    input = scanner.nextLine();
+                    input = this.scanner.nextLine();
                     validInput = true;
-                    
+
                     // Check if input only contains 🍌 emojis (nothing else, not even whitespace)
-                    for (int i = 0; i < input.length(); ) {
+                    for (int i = 0; i < input.length();) {
                         int codePoint = input.codePointAt(i);
                         String emoji = new String(Character.toChars(codePoint));
-                        
+
                         if (!emoji.equals("🍌")) {
                             validInput = false;
                             break;
                         }
-                        
+
                         i += Character.charCount(codePoint);
                     }
-                    
+
                     if (validInput) {
                         // Count the number of 🍌 emojis (input is already validated to only contain 🍌)
-                        int bananaCount = 0;
-                        for (int i = 0; i < input.length(); ) {
+                        double bananaCount = 0;
+                        for (int i = 0; i < input.length();) {
                             bananaCount++;
                             i += Character.charCount(input.codePointAt(i));
                         }
-                        
-                        stack.push(bananaCount);
+
+                        this.list.add(bananaCount);
                     }
                 }
                 continue;
             }
-            
+
             switch (cmd) {
 
                 case "ADD": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("ADD needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
-                    this.stack.push(a + b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a + b);
                     break;
                 }
 
                 case "SUBTRACT": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("SUBTRACT needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
-                    this.stack.push(a - b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a - b);
                     break;
                 }
 
                 case "MULTIPLY": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("MULTIPLY needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
-                    this.stack.push(a * b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a * b);
                     break;
                 }
 
+                case "DUP":
+                    if (this.list.isEmpty()) {
+                        this.error("DUP needs 1 value!");
+                        break;
+                    }
+                    double value = this.list.get(this.list.size() - 1); // Look at top without removing
+                    this.list.add(value); // Push a copy
+                    break;
                 case "DIVIDE": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("DIVIDE needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
-                    this.stack.push(a / b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a / b);
                     break;
                 }
 
                 case "MODULUS": {
-                    if (this.stack.size() < 2) {
+                    if (this.list.size() < 2) {
                         this.error("MODULUS needs 2 values!");
                         break;
                     }
-                    int b = this.stack.pop();
-                    int a = this.stack.pop();
-                    this.stack.push(a % b);
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
+                    this.list.add(a % b);
                     break;
                 }
 
@@ -143,41 +151,40 @@ public class BananaInterpreter {
                     break;
 
                 case "PRINT": {
-                    if (this.stack.isEmpty()) {
+                    if (this.list.isEmpty()) {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print(stack.pop());
+                    System.out.print(this.list.remove(this.list.size() - 1));
 
                     break;
                 }
 
                 case "PRINTC":
-                    if (this.stack.isEmpty()) {
+                    if (this.list.isEmpty()) {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print((char) stack.pop().intValue());
+                    System.out.print((char) this.list.remove(this.list.size() - 1).intValue());
 
                     break;
 
                 case "CLEAR": {
-                    this.stack.clear();
-                    System.out.println("💥 Stack cleared!");
+                    this.list.clear();
+                    System.out.println("💥 List cleared!");
                     break;
                 }
 
                 case "EQUALS": {
-                    int b = stack.pop();
-                    int a = stack.pop();
+                    double b = this.list.remove(this.list.size() - 1);
+                    double a = this.list.remove(this.list.size() - 1);
                     if (a == b) {
-                        stack.push(1);
+                        this.list.add(1.0);
                     } else {
-                        stack.push(0);
+                        this.list.add(0.0);
                     }
-                    
+                    break;
                 }
-
 
                 default:
                     this.error("Unknown command: " + cmd);

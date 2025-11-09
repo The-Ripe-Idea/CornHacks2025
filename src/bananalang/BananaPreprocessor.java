@@ -34,7 +34,7 @@ public class BananaPreprocessor {
             i += Character.charCount(codePoint);
         }
         s = result.toString();
-        fileScanner.close();// ︵︶
+        fileScanner.close();
         return s;
 
     }
