@@ -1,9 +1,10 @@
 import bananalang.BananaCommands;
 import bananalang.BananaInterpreter;
 import bananalang.BananaParser;
-
-
-import java.util.ArrayList;
+import bananalang.BananaPreprocessor;
+import java.io.File;
+import java.io.FileNotFoundException;
+//import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,8 +17,10 @@ public class Main {
      * 
      * @param args command line arguments (not used)
      */
-    public static void main(String[] args) {
-        String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
+    public static void main(String[] args) throws FileNotFoundException{
+        //String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
+        String code = BananaPreprocessor.process(new File("./hello.txt"));
+        //System.out.println(code);
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);
         // List<String> list = new ArrayList<String>();

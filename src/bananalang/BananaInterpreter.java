@@ -2,6 +2,7 @@ package bananalang;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -10,6 +11,7 @@ import java.util.Stack;
 public class BananaInterpreter {
 
     private final Stack<Integer> stack = new Stack<>();
+    private final Scanner scanner = new Scanner(System.in);
 
     /**
      * Executes the given list of Banana language commands.
@@ -34,6 +36,42 @@ public class BananaInterpreter {
                     }
                 } else {
                     error("PUSH_ONE requires a number but none was provided");
+                }
+                continue;
+            }
+            
+            if (cmd.equals("PUSH_INPUT")) {
+                // Read input from console and validate it only contains 🍌
+                String input;
+                boolean validInput = false;
+                
+                while (!validInput) {
+                    input = scanner.nextLine();
+                    validInput = true;
+                    
+                    // Check if input only contains 🍌 emojis (nothing else, not even whitespace)
+                    for (int i = 0; i < input.length(); ) {
+                        int codePoint = input.codePointAt(i);
+                        String emoji = new String(Character.toChars(codePoint));
+                        
+                        if (!emoji.equals("🍌")) {
+                            validInput = false;
+                            break;
+                        }
+                        
+                        i += Character.charCount(codePoint);
+                    }
+                    
+                    if (validInput) {
+                        // Count the number of 🍌 emojis (input is already validated to only contain 🍌)
+                        int bananaCount = 0;
+                        for (int i = 0; i < input.length(); ) {
+                            bananaCount++;
+                            i += Character.charCount(input.codePointAt(i));
+                        }
+                        
+                        stack.push(bananaCount);
+                    }
                 }
                 continue;
             }
@@ -67,7 +105,7 @@ public class BananaInterpreter {
                         error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.println("🍌 Output: " + stack.pop());
+                    System.out.print(stack.pop());
                     break;
                 }
 
@@ -76,7 +114,7 @@ public class BananaInterpreter {
                         error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.println("🍌 Output: " + (char) stack.pop().intValue());
+                    System.out.print((char) stack.pop().intValue());
                     break;
 
                 case "CLEAR": {
@@ -84,6 +122,18 @@ public class BananaInterpreter {
                     System.out.println("💥 Stack cleared!");
                     break;
                 }
+
+                case "EQUALS": {
+                    int b = stack.pop();
+                    int a = stack.pop();
+                    if (a == b) {
+                        // TODO: impement body execution
+                    } else {
+                        // TODO: implement skipping over body
+                    }
+                    stack.push(b);
+                }
+
 
                 default:
                     error("Unknown command: " + cmd);
