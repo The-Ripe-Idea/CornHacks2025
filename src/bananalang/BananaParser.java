@@ -60,13 +60,12 @@ public class BananaParser {
                         }
                         
                         double number = 1;
-                        int j = 0;
+                        int j = 3;
                         boolean negative = false;
                         try {
                             if (nextToken.startsWith("🌙🌙")) {
                                 
                                 if (nextToken.startsWith("🌙🌙🍌")) {
-                                    j = 3;
                                     negative = true;
                                 }
                                 int x = 0;
