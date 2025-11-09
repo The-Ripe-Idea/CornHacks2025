@@ -34,6 +34,30 @@ public class BananaParser {
                             i++; // Skip the input token
                             break;
                         }
+
+                        if (nextToken.startsWith("🙉")) {
+                            StringBuilder binaryString = new StringBuilder();
+                            for (int j = 1; j < nextToken.length(); ) {
+                                int codePoint = nextToken.codePointAt(j); // get the full emoji code point
+                                String emoji = new String(Character.toChars(codePoint));
+
+                                if (emoji.equals("🍌")) {
+                                    binaryString.append('1');
+                                } else if (emoji.equals("🌙")) {
+                                    binaryString.append('0');
+                                }
+
+                                j += Character.charCount(codePoint); // move to the next emoji
+                            }
+                            double number = Integer.parseInt(binaryString.toString(), 2);
+                            number = BananaInterpreter.list.get((int) number);
+                            i++; // Skip the number token
+
+                            commands.add("PUSH_ONE");
+                            commands.add(String.valueOf(number));
+                            
+                            break;
+                        }
                         
                         double number = 1;
                         int j = 0;
