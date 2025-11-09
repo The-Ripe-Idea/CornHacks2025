@@ -36,13 +36,19 @@ public class BananaParser {
                         }
                         
                         double number = 1;
+                        int j = 0;
+                        boolean negative = false;
                         try {
-                            // TODO: add input argument for PUSH
                             if (nextToken.startsWith("🌙🌙")) {
+                                
+                                if (nextToken.startsWith("🌙🌙🍌")) {
+                                    j = 3;
+                                    negative = true;
+                                }
                                 int x = 0;
                                 StringBuilder binaryString = new StringBuilder();
                                 int[] numberHalves = new int[2];
-                                for (int j = 0; j < nextToken.length(); ) {
+                                while (j < nextToken.length()) {
                                     int codePoint = nextToken.codePointAt(j); // get the full emoji code point
                                     String emoji = new String(Character.toChars(codePoint));
 
@@ -57,11 +63,17 @@ public class BananaParser {
                                     j += Character.charCount(codePoint); // move to the next emoji
                                 }
                                 String doubleString = numberHalves[0] + "." + numberHalves[1];
-                                number = Double.parseDouble(doubleString);
+                                number = (Double.parseDouble(doubleString));
+                                if (negative) {
+                                    number *= -1;
+                                }
                                 i++; // Skip the number token
                             } else if (nextToken.startsWith("🌙")) {
+                                if (nextToken.startsWith("🌙🍌")) {
+                                    negative = true;
+                                }
                                 StringBuilder binaryString = new StringBuilder();
-                                for (int j = 0; j < nextToken.length(); ) {
+                                for (j = 2; j < nextToken.length(); ) {
                                     int codePoint = nextToken.codePointAt(j); // get the full emoji code point
                                     String emoji = new String(Character.toChars(codePoint));
 
@@ -74,6 +86,9 @@ public class BananaParser {
                                     j += Character.charCount(codePoint); // move to the next emoji
                                 }
                                 number = Integer.parseInt(binaryString.toString(), 2);
+                                if (negative) {
+                                    number *= -1;
+                                }
                                 i++; // Skip the number token
                             }   
                             
@@ -94,16 +109,19 @@ public class BananaParser {
                         commands.add("1");
                     }
                     break;
+                case "🌴": 
+                    commands.add("DUP");
+                    break;
                 case "🍌🍌":
                     commands.add("ADD");
                     break;
                 case "🍌🌴":
                     commands.add("MULTIPLY");
                     break;
-                case "🍌🔢":
+                case "🍌🙈":
                     commands.add("PRINT");
                     break;
-                case "🍌🔡":
+                case "🍌🙉":
                     commands.add("PRINTC");
                     break;
                 case "🍌🍌🍌🍌🍌":

@@ -23,7 +23,7 @@ public class BananaInterpreter {
         Iterator<String> iterator = commands.iterator();
         while (iterator.hasNext()) {
             String cmd = iterator.next();
-            
+
             if (cmd.equals("PUSH_ONE")) {
                 // Get the next command which should be a number
                 if (iterator.hasNext()) {
@@ -39,43 +39,43 @@ public class BananaInterpreter {
                 }
                 continue;
             }
-            
+
             if (cmd.equals("PUSH_INPUT")) {
                 // Read input from console and validate it only contains 🍌
                 String input;
                 boolean validInput = false;
-                
+
                 while (!validInput) {
                     input = this.scanner.nextLine();
                     validInput = true;
-                    
+
                     // Check if input only contains 🍌 emojis (nothing else, not even whitespace)
-                    for (int i = 0; i < input.length(); ) {
+                    for (int i = 0; i < input.length();) {
                         int codePoint = input.codePointAt(i);
                         String emoji = new String(Character.toChars(codePoint));
-                        
+
                         if (!emoji.equals("🍌")) {
                             validInput = false;
                             break;
                         }
-                        
+
                         i += Character.charCount(codePoint);
                     }
-                    
+
                     if (validInput) {
                         // Count the number of 🍌 emojis (input is already validated to only contain 🍌)
                         double bananaCount = 0;
-                        for (int i = 0; i < input.length(); ) {
+                        for (int i = 0; i < input.length();) {
                             bananaCount++;
                             i += Character.charCount(input.codePointAt(i));
                         }
-                        
+
                         this.stack.push(bananaCount);
                     }
                 }
                 continue;
             }
-            
+
             switch (cmd) {
 
                 case "ADD": {
@@ -99,6 +99,15 @@ public class BananaInterpreter {
                     this.stack.push(a * b);
                     break;
                 }
+
+                case "DUP":
+                    if (this.stack.isEmpty()) {
+                        this.error("DUP needs 1 value!");
+                        break;
+                    }
+                    double value = this.stack.peek(); // Look at top without removing
+                    this.stack.push(value); // Push a copy
+                    break;
 
                 case "PRINT": {
                     if (this.stack.isEmpty()) {
@@ -124,7 +133,7 @@ public class BananaInterpreter {
                     System.out.println("💥 Stack cleared!");
                     break;
                 }
- 
+
                 case "EQUALS": {
                     double b = this.stack.pop();
                     double a = this.stack.pop();
@@ -135,7 +144,6 @@ public class BananaInterpreter {
                     }
                     break;
                 }
-
 
                 default:
                     this.error("Unknown command: " + cmd);
