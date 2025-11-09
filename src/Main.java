@@ -6,7 +6,6 @@ import bananalang.BananaPreprocessor;
 import java.io.File;
 import java.io.FileNotFoundException;
 //import java.util.ArrayList;
-
 import java.util.List;
 
 /**
@@ -20,7 +19,8 @@ public class Main {
      */
     public static void main(String[] args) throws FileNotFoundException{
         //String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
-        String code = BananaPreprocessor.process(new File("./equals.txt"));
+        String code = BananaPreprocessor.process(new File("./hello2.txt"));
+        
         //System.out.println(code);
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);
