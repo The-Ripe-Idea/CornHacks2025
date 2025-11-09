@@ -19,8 +19,7 @@ public class BananaPreprocessor {
     
     /**
      * Creates and initializes the set of allowed emojis for file processing.
-     * 
-     * @return a Set containing the allowed emojis
+     * * @return a Set containing the allowed emojis
      */
     private static Set<String> createAllowedEmojisSet() {
         Set<String> allowed = new HashSet<>();
@@ -35,6 +34,7 @@ public class BananaPreprocessor {
         allowed.add("❄️");  // Snowflake - MODULUS token
         allowed.add("🙈");  // See-no-evil monkey - PRINT token
         allowed.add("🙉");  // Hear-no-evil monkey - PRINTC token
+        allowed.add("︶");  // <-- ADDED THIS CHARACTER
 
         // Add more allowed emojis here if needed in the future
         return allowed;
@@ -42,8 +42,7 @@ public class BananaPreprocessor {
     
     /**
      * Creates and initializes the set of allowed emojis for input.
-     * 
-     * @return a Set containing the allowed input emojis
+     * * @return a Set containing the allowed input emojis
      */
     private static Set<String> createAllowedInputEmojisSet() {
         Set<String> allowed = new HashSet<>();
@@ -55,8 +54,7 @@ public class BananaPreprocessor {
     /**
      * Processes a string by converting non-whitelisted characters to spaces.
      * Uses the file processing whitelist.
-     * 
-     * @param input the input string to process
+     * * @param input the input string to process
      * @return the processed string with non-whitelisted characters replaced by spaces
      */
     public static String processString(String input) {
@@ -65,8 +63,7 @@ public class BananaPreprocessor {
     
     /**
      * Processes a string by converting non-whitelisted characters to spaces.
-     * 
-     * @param input the input string to process
+     * * @param input the input string to process
      * @param whitelist the set of allowed emojis
      * @return the processed string with non-whitelisted characters replaced by spaces
      */
@@ -94,8 +91,7 @@ public class BananaPreprocessor {
     /**
      * Processes a string by converting non-whitelisted characters to spaces.
      * Uses the input whitelist (more restrictive).
-     * 
-     * @param input the input string to process
+     * * @param input the input string to process
      * @return the processed string with non-whitelisted characters replaced by spaces
      */
     public static String processInputString(String input) {
