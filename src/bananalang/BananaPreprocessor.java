@@ -34,7 +34,7 @@ public class BananaPreprocessor {
         allowed.add("❄️");  // Snowflake - MODULUS token
         allowed.add("🙈");  // See-no-evil monkey - PRINT token
         allowed.add("🙉");  // Hear-no-evil monkey - PRINTC token
-        allowed.add("︶");  // <-- ADDED THIS CHARACTER
+        allowed.add("︶");  // PRESENTATION FORM FOR VERTICAL RIGHT PARENTHESIS - ︶ token (closing bracket for EQUALS)
 
         // Add more allowed emojis here if needed in the future
         return allowed;
