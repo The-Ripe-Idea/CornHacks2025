@@ -219,6 +219,10 @@ public class BananaInterpreter {
                     break;
                 }
 
+                case "︶": {
+                    break;
+                }
+
                 default:
                     this.error("Unknown command: " + cmd);
                     break;
