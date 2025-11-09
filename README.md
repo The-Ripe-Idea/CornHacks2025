@@ -23,4 +23,4 @@ EX: 🌙
 
 LETTERS: 
 - Uses binary ascii for charcters
-- Differentiates between 
+- Differentiates between characters and numbers by the type of print statement.
