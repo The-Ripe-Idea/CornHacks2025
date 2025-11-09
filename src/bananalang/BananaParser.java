@@ -139,6 +139,9 @@ public class BananaParser {
                 case "🍌❓":
                     commands.add("EQUALS");
                     break;
+                case "︶":
+                    commands.add("︶");
+                    break;
                 default:
                     System.out.println("⚠️ Unknown token: " + token);
             }
