@@ -29,7 +29,7 @@ public class BananaInterpreter {
                 if (iterator.hasNext()) {
                     String numberStr = iterator.next();
                     try {
-                        double number = Integer.parseInt(numberStr);
+                        double number = Double.parseDouble(numberStr);
                         this.list.add(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
@@ -41,36 +41,30 @@ public class BananaInterpreter {
             }
 
             if (cmd.equals("PUSH_INPUT")) {
-                // Read input from console and validate it only contains 🍌
+                // Read input from console and process it through the preprocessor
                 String input;
                 boolean validInput = false;
 
                 while (!validInput) {
                     input = this.scanner.nextLine();
-                    validInput = true;
-
-                    // Check if input only contains 🍌 emojis (nothing else, not even whitespace)
-                    for (int i = 0; i < input.length();) {
-                        int codePoint = input.codePointAt(i);
-                        String emoji = new String(Character.toChars(codePoint));
-
-                        if (!emoji.equals("🍌")) {
-                            validInput = false;
-                            break;
-                        }
-
-                        i += Character.charCount(codePoint);
-                    }
-
+                    
+                    // Process input: convert non-whitelisted characters to spaces
+                    // Uses input-specific whitelist (only 🍌)
+                    String processed = BananaPreprocessor.processInputString(input);
+                    
+                    // Check if processed input contains only whitelisted emojis (no spaces)
+                    // If it contains spaces, it means there were non-whitelisted characters
+                    validInput = !processed.contains(" ");
+                    
                     if (validInput) {
-                        // Count the number of 🍌 emojis (input is already validated to only contain 🍌)
-                        double bananaCount = 0;
-                        for (int i = 0; i < input.length();) {
-                            bananaCount++;
-                            i += Character.charCount(input.codePointAt(i));
+                        // Count the number of whitelisted emojis
+                        double emojiCount = 0;
+                        for (int i = 0; i < processed.length();) {
+                            emojiCount++;
+                            i += Character.charCount(processed.codePointAt(i));
                         }
 
-                        this.list.add(bananaCount);
+                        this.list.add(emojiCount);
                     }
                 }
                 continue;
@@ -140,15 +134,6 @@ public class BananaInterpreter {
                     this.list.add(a % b);
                     break;
                 }
-
-                case "DUP":
-                    if (this.stack.isEmpty()) {
-                        this.error("DUP needs 1 value!");
-                        break;
-                    }
-                    int value = this.stack.peek();  // Look at top without removing
-                    this.stack.push(value);         // Push a copy
-                    break;
 
                 case "PRINT": {
                     if (this.list.isEmpty()) {
