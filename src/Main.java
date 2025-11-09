@@ -16,7 +16,7 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("hello_golf.nana");
+        File file = new File("calc.nana");
         if (!file.exists()) {
             System.err.println("Error: File not found: " + file.getAbsolutePath());
             return;
