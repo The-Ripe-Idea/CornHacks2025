@@ -29,7 +29,7 @@ public class BananaInterpreter {
                 if (iterator.hasNext()) {
                     String numberStr = iterator.next();
                     try {
-                        double number = Integer.parseInt(numberStr);
+                        double number = Double.parseDouble(numberStr);
                         this.list.add(number);
                     } catch (NumberFormatException e) {
                         this.error("Invalid number after PUSH_ONE: " + numberStr);
