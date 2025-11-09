@@ -1,12 +1,13 @@
 import bananalang.BananaCommands;
 import bananalang.BananaInterpreter;
 import bananalang.BananaParser;
+
 import bananalang.BananaPreprocessor;
 import java.io.File;
 import java.io.FileNotFoundException;
 //import java.util.ArrayList;
-import java.util.List;
 
+import java.util.List;
 
 /**
  * Main class for testing the Banana language interpreter.
