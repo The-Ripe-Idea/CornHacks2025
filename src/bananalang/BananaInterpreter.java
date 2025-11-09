@@ -28,12 +28,12 @@ public class BananaInterpreter {
                     String numberStr = iterator.next();
                     try {
                         int number = Integer.parseInt(numberStr);
-                        stack.push(number);
+                        this.stack.push(number);
                     } catch (NumberFormatException e) {
-                        error("Invalid number after PUSH_ONE: " + numberStr);
+                        this.error("Invalid number after PUSH_ONE: " + numberStr);
                     }
                 } else {
-                    error("PUSH_ONE requires a number but none was provided");
+                    this.error("PUSH_ONE requires a number but none was provided");
                 }
                 continue;
             }
@@ -41,44 +41,52 @@ public class BananaInterpreter {
             switch (cmd) {
 
                 case "ADD": {
-                    if (stack.size() < 2) {
-                        error("ADD needs 2 values!");
+                    if (this.stack.size() < 2) {
+                        this.error("ADD needs 2 values!");
                         break;
                     }
-                    int b = stack.pop();
-                    int a = stack.pop();
-                    stack.push(a + b);
+                    int b = this.stack.pop();
+                    int a = this.stack.pop();
+                    this.stack.push(a + b);
                     break;
                 }
 
                 case "MULTIPLY": {
-                    if (stack.size() < 2) {
-                        error("MULTIPLY needs 2 values!");
+                    if (this.stack.size() < 2) {
+                        this.error("MULTIPLY needs 2 values!");
                         break;
                     }
-                    int b = stack.pop();
-                    int a = stack.pop();
-                    stack.push(a * b);
+                    int b = this.stack.pop();
+                    int a = this.stack.pop();
+                    this.stack.push(a * b);
                     break;
                 }
 
                 case "PRINT": {
-                    if (stack.isEmpty()) {
-                        error("PRINT needs 1 value!");
+                    if (this.stack.isEmpty()) {
+                        this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.println("🍌 Output: " + stack.pop());
+                    System.out.println("🍌 Output: " + this.stack.pop());
                     break;
                 }
 
+                case "PRINTC":
+                    if (this.stack.isEmpty()) {
+                        this.error("PRINT needs 1 value!");
+                        break;
+                    }
+                    System.out.println("🍌 Output: " + (char) this.stack.pop().intValue());
+                    break;
+
                 case "CLEAR": {
-                    stack.clear();
+                    this.stack.clear();
                     System.out.println("💥 Stack cleared!");
                     break;
                 }
 
                 default:
-                    error("Unknown command: " + cmd);
+                    this.error("Unknown command: " + cmd);
                     break;
             }
         }

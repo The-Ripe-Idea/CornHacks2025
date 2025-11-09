@@ -23,7 +23,7 @@ public class BananaLang {
         try {
             String code = new String(Files.readAllBytes(Paths.get(args[0])));
             BananaParser parser = new BananaParser();
-            List<BananaCommands> commands = parser.parse(code);
+            List<String> commands = parser.parse(code);
             BananaInterpreter interpreter = new BananaInterpreter();
             interpreter.run(commands);
         } catch (IOException e) {

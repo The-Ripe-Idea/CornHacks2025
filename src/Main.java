@@ -2,10 +2,8 @@ import bananalang.BananaCommands;
 import bananalang.BananaInterpreter;
 import bananalang.BananaParser;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Main class for testing the Banana language interpreter.
@@ -17,7 +15,7 @@ public class Main {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        String code = "🍌 🌙🍌🌙🍌 🍌 🍌🍌 🍌🍌🍌";
+        String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);
         // List<String> list = new ArrayList<String>();
