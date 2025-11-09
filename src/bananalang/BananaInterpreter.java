@@ -133,6 +133,15 @@ public class BananaInterpreter {
                     break;
                 }
 
+                case "DUP":
+                    if (this.stack.isEmpty()) {
+                        this.error("DUP needs 1 value!");
+                        break;
+                    }
+                    int value = this.stack.peek();  // Look at top without removing
+                    this.stack.push(value);         // Push a copy
+                    break;
+
                 case "PRINT": {
                     if (this.stack.isEmpty()) {
                         this.error("PRINT needs 1 value!");
