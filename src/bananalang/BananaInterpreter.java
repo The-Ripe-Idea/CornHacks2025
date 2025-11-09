@@ -12,6 +12,8 @@ public class BananaInterpreter {
 
     private final ArrayList<Double> list = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
+    private static boolean lookingForU = false;
+    private static int uCounter = 0;
 
     /**
      * Executes the given list of Banana language commands.
@@ -23,6 +25,18 @@ public class BananaInterpreter {
         Iterator<String> iterator = commands.iterator();
         while (iterator.hasNext()) {
             String cmd = iterator.next();
+            while (lookingForU){ // while (uCounter > 0)
+                cmd = iterator.next();
+                if (cmd.equals("EQUALS")) {
+                    uCounter++;
+                } else if (cmd.equals("︶")) {
+                    uCounter--;
+                    if (uCounter == 0) {
+                        lookingForU = false;
+                        cmd = iterator.next();
+                    }
+                }
+            }
 
             if (cmd.equals("PUSH_ONE")) {
                 // Get the next command which should be a number
@@ -161,12 +175,20 @@ public class BananaInterpreter {
                 }
 
                 case "EQUALS": {
+                    // if (this.list.size() < 2) { // no equality found
+                    //     this.list.add(0.0);
+                    //     lookingForU = true;
+                    //     uCounter = 1;
+                    // }
+
                     double b = this.list.remove(this.list.size() - 1);
                     double a = this.list.remove(this.list.size() - 1);
                     if (a == b) {
                         this.list.add(1.0);
                     } else {
-                        this.list.add(0.0);
+                        this.list.add(b);
+                        lookingForU = true;
+                        uCounter = 1;
                     }
                     break;
                 }
