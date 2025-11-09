@@ -17,7 +17,7 @@ public class Main {
      */
     public static void main(String[] args) throws FileNotFoundException{
         //String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
-        String code = BananaPreprocessor.process(new File("./add.txt"));
+        String code = BananaPreprocessor.process(new File("./fitness.txt"));
         //System.out.println(code);
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);

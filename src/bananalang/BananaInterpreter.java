@@ -196,7 +196,7 @@ public class BananaInterpreter {
 
                 case "CLEAR": {
                     list.clear();
-                    System.out.println("💥 List cleared!");
+                    //System.out.println("💥 List cleared!");
                     break;
                 }
 
