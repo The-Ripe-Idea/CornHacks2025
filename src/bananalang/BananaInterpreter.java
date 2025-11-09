@@ -175,19 +175,20 @@ public class BananaInterpreter {
                 }
 
                 case "EQUALS": {
-                    if (this.stack.size() < 2) { // no equality found
-                        this.stack.push(0.0);
-                        lookingForU = true;
-                        uCounter = 1;
-                    }
+                    // if (this.list.size() < 2) { // no equality found
+                    //     this.list.add(0.0);
+                    //     lookingForU = true;
+                    //     uCounter = 1;
+                    // }
 
                     double b = this.list.remove(this.list.size() - 1);
                     double a = this.list.remove(this.list.size() - 1);
                     if (a == b) {
                         this.list.add(1.0);
                     } else {
-
                         this.list.add(b);
+                        lookingForU = true;
+                        uCounter = 1;
                     }
                     break;
                 }
