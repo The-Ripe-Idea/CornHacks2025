@@ -60,7 +60,7 @@ public class BananaParser {
                         }
                         
                         double number = 1;
-                        int j = 3;
+                        int j = 6;
                         boolean negative = false;
                         try {
                             if (nextToken.startsWith("🌙🌙")) {
@@ -83,16 +83,18 @@ public class BananaParser {
                                         binaryString.append('0');
                                     } else if (emoji.equals("🐒")) {
                                         numberHalves[x] += binaryString.toString();
+                                        binaryString = new StringBuilder();
                                         x++;
                                     }
                                     j += Character.charCount(codePoint); // move to the next emoji
                                 }
-                                StringBuilder doubleString = new StringBuilder(numberHalves[0] + ".");
+                                numberHalves[x] += binaryString.toString();
+                                StringBuilder doubleString = new StringBuilder(Integer.parseInt(numberHalves[0], 2) + ".");
                                 while (numberHalves[1].startsWith("0")) {
                                     doubleString.append("0");
                                     numberHalves[1] = numberHalves[1].substring(1);
                                 }
-                                doubleString.append(numberHalves[1]);
+                                doubleString.append(Integer.parseInt(numberHalves[1], 2));
                                 number = (Double.parseDouble(doubleString.toString()));
                                 if (negative) {
                                     number *= -1;
