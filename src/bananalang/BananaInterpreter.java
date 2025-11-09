@@ -12,6 +12,8 @@ public class BananaInterpreter {
 
     private final Stack<Double> stack = new Stack<>();
     private final Scanner scanner = new Scanner(System.in);
+    private static boolean lookingForU = false;
+    private static int uCounter = 0;
 
     /**
      * Executes the given list of Banana language commands.
@@ -23,6 +25,18 @@ public class BananaInterpreter {
         Iterator<String> iterator = commands.iterator();
         while (iterator.hasNext()) {
             String cmd = iterator.next();
+            while (lookingForU){ // while (uCounter > 0)
+                cmd = iterator.next();
+                if (cmd.equals("EQUALS")) {
+                    uCounter++;
+                } else if (cmd.equals("︶")) {
+                    uCounter--;
+                    if (uCounter == 0) {
+                        lookingForU = false;
+                        cmd = iterator.next();
+                    }
+                }
+            }
 
             if (cmd.equals("PUSH_ONE")) {
                 // Get the next command which should be a number
@@ -167,12 +181,17 @@ public class BananaInterpreter {
                 }
 
                 case "EQUALS": {
-                    double b = this.stack.pop();
+                    if (this.stack.size() < 2) { // no equality found
+                        this.stack.push(0.0);
+                        lookingForU = true;
+                        uCounter = 1;
+                    }
+                    double b = this.stack.pop(); // User_Option
                     double a = this.stack.pop();
                     if (a == b) {
                         this.stack.push(1.0);
                     } else {
-                        this.stack.push(0.0);
+                        this.stack.push(b);
                     }
                     break;
                 }

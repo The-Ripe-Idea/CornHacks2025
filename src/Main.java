@@ -20,7 +20,7 @@ public class Main {
      */
     public static void main(String[] args) throws FileNotFoundException{
         //String code = "🍌 🌙🍌🌙🌙🍌🌙🌙🌙 🍌🍌🍌🍌🍌🍌 🍌 🌙🍌🍌🌙🌙🍌🌙🍌 🍌🍌🍌🍌🍌🍌";
-        String code = BananaPreprocessor.process(new File("./hello.txt"));
+        String code = BananaPreprocessor.process(new File("./equals.txt"));
         //System.out.println(code);
         BananaParser parser = new BananaParser();
         List<String> commands = parser.parse(code);
