@@ -71,7 +71,9 @@ public class BananaParser {
                                 }
                                 int x = 0;
                                 StringBuilder binaryString = new StringBuilder();
-                                int[] numberHalves = new int[2];
+                                String[] numberHalves = new String[2];
+                                numberHalves[0] = "";
+                                numberHalves[1] = "";
                                 while (j < nextToken.length()) {
                                     int codePoint = nextToken.codePointAt(j); // get the full emoji code point
                                     String emoji = new String(Character.toChars(codePoint));
@@ -81,13 +83,18 @@ public class BananaParser {
                                     } else if (emoji.equals("🌙")) {
                                         binaryString.append('0');
                                     } else if (emoji.equals("🐒")) {
-                                        numberHalves[x] += Integer.parseInt(binaryString.toString(), 2);
+                                        numberHalves[x] += binaryString.toString();
                                         x++;
                                     }
                                     j += Character.charCount(codePoint); // move to the next emoji
                                 }
-                                String doubleString = numberHalves[0] + "." + numberHalves[1];
-                                number = (Double.parseDouble(doubleString));
+                                StringBuilder doubleString = new StringBuilder(numberHalves[0] + ".");
+                                while (numberHalves[1].startsWith("0")) {
+                                    doubleString.append("0");
+                                    numberHalves[1] = numberHalves[1].substring(1);
+                                }
+                                doubleString.append(numberHalves[1]);
+                                number = (Double.parseDouble(doubleString.toString()));
                                 if (negative) {
                                     number *= -1;
                                 }

@@ -180,7 +180,13 @@ public class BananaInterpreter {
                         this.error("PRINT needs 1 value!");
                         break;
                     }
-                    System.out.print(list.remove(list.size() - 1));
+                    
+
+                    if ((list.get(list.size() - 1) -  Math.floor(list.get(list.size() - 1))) < 0.000000001) {
+                        System.out.print(list.remove(list.size() - 1).intValue());
+                    } else {
+                        System.out.print(list.remove(list.size() - 1));
+                    }
 
                     break;
                 }
