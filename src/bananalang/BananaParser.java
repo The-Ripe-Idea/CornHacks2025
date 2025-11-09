@@ -141,9 +141,6 @@ public class BananaParser {
                         commands.add("1");
                     }
                     break;
-                case "🌴": 
-                    commands.add("DUP");
-                    break;
                 case "🍌🍌":
                     commands.add("ADD");
                     break;

@@ -145,14 +145,6 @@ public class BananaInterpreter {
                     break;
                 }
 
-                case "DUP":
-                    if (list.isEmpty()) {
-                        this.error("DUP needs 1 value!");
-                        break;
-                    }
-                    double value = list.get(list.size() - 1); // Look at top without removing
-                    list.add(value); // Push a copy
-                    break;
                 case "DIVIDE": {
                     if (list.size() < 2) {
                         this.error("DIVIDE needs 2 values!");
