@@ -89,6 +89,17 @@ public class BananaInterpreter {
                     break;
                 }
 
+                case "SUBTRACT": {
+                    if (this.stack.size() < 2) {
+                        this.error("SUBTRACT needs 2 values!");
+                        break;
+                    }
+                    int b = this.stack.pop();
+                    int a = this.stack.pop();
+                    this.stack.push(a - b);
+                    break;
+                }
+
                 case "MULTIPLY": {
                     if (this.stack.size() < 2) {
                         this.error("MULTIPLY needs 2 values!");
@@ -108,6 +119,27 @@ public class BananaInterpreter {
                     double value = this.stack.peek(); // Look at top without removing
                     this.stack.push(value); // Push a copy
                     break;
+                case "DIVIDE": {
+                    if (this.stack.size() < 2) {
+                        this.error("DIVIDE needs 2 values!");
+                        break;
+                    }
+                    int b = this.stack.pop();
+                    int a = this.stack.pop();
+                    this.stack.push(a / b);
+                    break;
+                }
+
+                case "MODULUS": {
+                    if (this.stack.size() < 2) {
+                        this.error("MODULUS needs 2 values!");
+                        break;
+                    }
+                    int b = this.stack.pop();
+                    int a = this.stack.pop();
+                    this.stack.push(a % b);
+                    break;
+                }
 
                 case "PRINT": {
                     if (this.stack.isEmpty()) {
@@ -143,6 +175,11 @@ public class BananaInterpreter {
                         this.stack.push(0.0);
                     }
                     break;
+                        stack.push(1);
+                    } else {
+                        stack.push(0);
+                    }
+                    
                 }
 
                 default:
