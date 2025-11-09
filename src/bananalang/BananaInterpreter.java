@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class BananaInterpreter {
 
-    private final ArrayList<Double> list = new ArrayList<>();
+    public static final ArrayList<Double> list = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
     private static boolean lookingForU = false;
     private static int uCounter = 0;
@@ -20,6 +20,7 @@ public class BananaInterpreter {
      * 
      * @param commands the list of commands to execute
      */
+
 
     public void run(List<String> commands) {
         Iterator<String> iterator = commands.iterator();
